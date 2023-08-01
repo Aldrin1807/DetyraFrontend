@@ -12,8 +12,10 @@
 </head>
 <body>
     <header>
+    
        <a href="login.html" class="btn btn-primary">Login</a>
        <a href="register.html" class="btn btn-primary">Signup</a>
+
     </header>
     <main>
        
@@ -52,11 +54,33 @@
         const email = document.getElementById('Email');
         const password = document.getElementById('password');
 
+        const usernameRegex = /^[A-Za-z]{6,}$/;
+        const emailRegex = /^[A-Za-z0-9]{2,10}[@][a-z]{1,10}\.[a-z]{2,3}$/;
+        const passiRegex = /^([A-Za-z0-9\S]{8,20})$/;
+
+
 
         
 
         butoniSignup.addEventListener('click', (e) => {
             e.preventDefault();
+
+        if(username.value == "" || email.value == "" || password.value == ""){
+            errorSweetAlert("All fields are required");
+            return;
+        }
+        if(!usernameRegex.test(username.value)){
+            errorSweetAlert("Username should be at least 6 characters long and contain only letters");
+            return;
+        }
+        if(!emailRegex.test(email.value)){
+            errorSweetAlert("Email should be valid");
+            return;
+        }
+        if(!passiRegex.test(password.value)){
+            errorSweetAlert("Password should be at least 8 characters long and contain only letters and numbers");
+            return;
+        }
         const url = 'https://localhost:7247/api/User/register';
         const data = {
             username: username.value,

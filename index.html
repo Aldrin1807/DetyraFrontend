@@ -9,14 +9,39 @@
 </head>
 <body>
     <header>
+        <div id="loginSignup">
        <a href="pages/login.html" class="btn btn-primary">Login</a>
        <a href="pages/register.html" class="btn btn-primary">Signup</a>
+        </div>
+
+       <div class="btn-group" id="buttoni">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Logged in
+        </button>
+        <ul class="dropdown-menu">
+          <li><button class="dropdown-item" onclick="logout(true)">Logout</button></li>
+        </ul>
+      </div>
     </header>
     <main>
         <h1 class="display-5">This Web Page only shows registered users</h1>
-        <p class="lead">See them <a href="">here</a></p>
+        <p class="lead">See them <a style="color: blue;cursor: pointer;" onclick="redirect()">here</a></p>
     </main>
 
+
+    <script>
+        function redirect(){
+            const token = sessionStorage.getItem("token");
+            if(token){
+                window.location.href = "pages/users.html";
+            }else{
+                window.location.href = "pages/login.html";
+            }
+        }
+       
+
+        
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="assets/js/main.js"></script>
 </body>

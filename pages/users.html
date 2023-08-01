@@ -7,51 +7,83 @@
     <link type="text/css" rel="stylesheet" href="../assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="../assets/js/main.js"></script>
     <title>Registered users</title>
 </head>
 <body>
 
     <header>
-        <div id="loginSignup">
-        <a href="login.html" class="btn btn-primary">Login</a>
-        <a href="register.html" class="btn btn-primary">Signup</a>
-        </div>
-
         <div class="btn-group" id="buttoni">
             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               Logged in
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Separated link</a></li>
+              <li><button class="dropdown-item" onclick="logout(false)">Logout</button></li>
             </ul>
           </div>
      </header>
      
      <main>
 
+        <table id="users">
+            <p class="lead">Registered Users</p>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Email Confirmed</th>
+                <th>Password</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+            </tbody>
+          </table>
+          
 
      </main>
     
 
 
      <script>
-        const token = sessionStorage.getItem('token');
-        const loginSignup = document.getElementById('loginSignup');
-        const butoni = document.getElementById('buttoni');
+        axios.get('https://localhost:7247/api/User/getusers',
+        {
+            headers: {Authorization: 'Bearer ' + token}
+        })
+        .then((response)=>{
+            console.log(response.data);
+            populateUserTable(response.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
 
-        if(token){
-            loginSignup.style.display = 'none';
-        }else{
-            butoni.style.display = 'none';
+
+
+        function populateUserTable(users) {
+            const userTable = document.getElementById('users');
+
+            // Clear any existing data from the table
+            userTable.querySelector('tbody').innerHTML = '';
+
+            // Populate the table with user data
+            users.forEach(user => {
+            const row = userTable.insertRow();
+            row.innerHTML = `
+                <td>${user.id}</td>
+                <td>${user.username}</td>
+                <td>${user.email}</td>
+                <td>${user.emailConfirmed}</td>
+                <td>${user.password}</td>
+            `;
+            });
         }
+    
      </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script src="../assets/js/main.js"></script>
+   
 </body>
 </html>

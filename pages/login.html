@@ -11,8 +11,10 @@
 </head>
 <body>
     <header>
+        
        <a href="login.html" class="btn btn-primary">Login</a>
        <a href="register.html" class="btn btn-primary">Signup</a>
+      
     </header>
     <main>
 
@@ -50,6 +52,11 @@
 
         butoniLogin.addEventListener('click', (e) => {
             e.preventDefault();
+
+        if(email.value == "" || password.value == ""){
+            errorSweetAlert("Please fill all the fields");
+            return;
+        }
         const url = 'https://localhost:7247/api/User/login';
         const data = {
             emailOrUsername: email.value,
