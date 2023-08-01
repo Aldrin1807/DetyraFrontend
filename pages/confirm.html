@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="../assets/css/style.css">
+   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <title>Confirm Email</title>
+</head>
+<body >
+    <div style="display: flex;justify-content: center;align-items: center;height: 70vh;">
+    <p class="lead">Confirming your email...</p>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const token = urlParams.get('token')
+        console.log(token)
+
+       
+            axios.post(`https://localhost:7247/api/User/confirmemail?token=${token}`).then((response)=>{
+                if(response.data.message=='True'){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Email confirmed!',
+                        text: 'You can now login!',
+                        footer: '<a href="login.html">Login</a>'
+                      })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.data.message,
+                        footer: '<a href="login.html">Try again</a>'
+                      })
+                }
+            })
+    
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
